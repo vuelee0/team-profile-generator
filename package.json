@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/vuelee0/team-profile-generator.git"
   },
-  "author": "",
+  "author": "Vue Lee",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/vuelee0/team-profile-generator/issues"
@@ -18,5 +18,8 @@
   "homepage": "https://github.com/vuelee0/team-profile-generator#readme",
   "devDependencies": {
     "jest": "^28.1.0"
+  },
+  "dependencies": {
+    "inquirer": "^8.2.4"
   }
 }
