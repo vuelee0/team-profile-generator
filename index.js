@@ -73,5 +73,19 @@ const promptManager = () => {
 
         engineeringTeamArray.push(manager);
         console.log(managerAnswer);
+        promptTeam();
     })
+};
+
+
+
+const promptTeam = () => {
+    return inquirer.prompt([
+        {
+            type: 'list',
+            name: 'roles',
+            message: "Please select your team member's role.",
+            choices: ['Engineer', 'Intern', 'Finish building team']
+        }
+    ])
 };
