@@ -45,13 +45,16 @@ const promptManager = () => {
             type: 'input',
             name: 'emailAddress',
             message: "What is the manager's email address?",
-            validate: emailInput => {
-                if (emailInput) {
-                    return true;
-                }
-                else {
-                    console.log('Please enter your email!');
-                }
+            validate: function(emailInput) {
+                // Return true if valid email
+                valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailInput)
+                    if (valid) {
+                        return true;
+                        }
+                    else {
+                        console.log('Must enter an email address!')
+                        return false;
+                    }
             }
         },
         {
@@ -80,12 +83,89 @@ const promptManager = () => {
 
 
 const promptTeam = () => {
+    console.log(`
+    ****************
+    Add Team Members
+    ****************
+    `);
+
     return inquirer.prompt([
         {
             type: 'list',
             name: 'roles',
-            message: "Please select your team member's role.",
+            message: "Please add your team member's role.",
             choices: ['Engineer', 'Intern', 'Finish building team']
+        },
+        {
+            type: 'input',
+            name: 'name',
+            message: "Enter team member's name.",
+            validate: nameInput => {
+                if (nameInput) {
+                    return true;
+                }
+                else {
+                    console.log('Must enter a name!');
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'employeeId',
+            message: "Enter team member's employee ID.",
+            validate: employeeIdInput => {
+                if (employeeIdInput) {
+                    return true;
+                }
+                else {
+                    console.log('Must Employee ID!');
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'emailAddress',
+            message: "Enter team member's email address.",
+            validate: function(emailAddress) {
+                // Return true if valid email
+                valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailAddress)
+                    if (valid) {
+                        return true;
+                        }
+                    else {
+                        console.log('Must enter an email address!')
+                        return false;
+                    }
+            }
+            
+        },
+        {
+            type: 'input',
+            name: 'github',
+            message: "Enter GitHub username.",
+            when: (choice) => choice.role === "Engineer",
+            validate: githubInput => {
+                if (githubInput) {
+                    return true;
+                }
+                else {
+                    console.log('Must enter the GitHub username!');
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'school',
+            message: "Enter School name.",
+            when: (choice) => choice.role === "Intern",
+            validate: schoolInput => {
+                if (schoolInput) {
+                    return true;
+                }
+                else {
+                    console.log('Must enter the School name!');
+                }
+            }
         }
-    ])
+    ]);
 };
