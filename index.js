@@ -97,6 +97,13 @@ const promptTeam = () => {
             choices: ['Engineer', 'Intern', 'Exit']
         },
         {
+            type: 'confirm',
+            name: 'exit',
+            message: "Would you like to exit?",
+            default: true,
+            when: (input) => input.role === 'Exit'
+        },
+        {
             type: 'input',
             name: 'nameTeaM',
             message: "Enter team member's name.",
@@ -143,7 +150,7 @@ const promptTeam = () => {
             type: 'input',
             name: 'github',
             message: "Enter GitHub username.",
-            when: (choice) => choice.role === "Engineer",
+            when: (input) => input.role === "Engineer",
             validate: githubInput => {
                 if (githubInput) {
                     return true;
@@ -157,7 +164,7 @@ const promptTeam = () => {
             type: 'input',
             name: 'school',
             message: "Enter School name.",
-            when: (choice) => choice.role === "Intern",
+            when: (input) => input.role === "Intern",
             validate: schoolInput => {
                 if (schoolInput) {
                     return true;
@@ -169,16 +176,17 @@ const promptTeam = () => {
         }
     ])
     .then(teamInput => {
-        let {nameTeaM, employeeId, emailAddress, github, school} = teamInput;
+      let {role, nameTeaM, employeeId, emailAddress, github, school} = teamInput;
         let teamMember;
+            if (role === 'Engineer') {
+                teamMember = new Engineer (teamInput.nameTeaM, teamInput.employeeId, teamInput.emailAddress, teamInput.github);
+            }
+            else if (role === 'Intern') {
+                teamMember = new Intern (teamInput.nameTeaM, teamInput.employeeId, teamInput.emailAddress, teamInput.school);
+            }
 
-        if (role === "Engineer") {
-            teamMember = new Engineer (nameTeaM, employeeId, emailAddress, github);
-        }
-        else if (role === "Intern") {
-            teamMember = new Intern (nameTeaM, employeeId, emailAddress, school);
-        }
         engineeringTeamArray.push(teamMember);
+        console.log(teamInput);
         promptTeam();
     });
 };
