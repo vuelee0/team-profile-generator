@@ -17,7 +17,7 @@ const promptManager = () => {
     return inquirer.prompt([
         {
             type: 'input',
-            name: 'name',
+            name: 'nameMag',
             message: "What is the manager's name?",
             validate: nameInput => {
                 if (nameInput) {
@@ -72,7 +72,7 @@ const promptManager = () => {
         }
     ])
     .then(managerAnswer => {
-        const manager = new Manager (name, employeeId, emailAddress, officeNumber);
+        const manager = new Manager (managerAnswer.nameMag, managerAnswer.employeeId, managerAnswer.emailAddress, managerAnswer.officeNumber);
 
         engineeringTeamArray.push(manager);
         console.log(managerAnswer);
@@ -81,7 +81,7 @@ const promptManager = () => {
 };
 
 
-
+// prompt to enter team member information
 const promptTeam = () => {
     console.log(`
     ****************
@@ -92,13 +92,13 @@ const promptTeam = () => {
     return inquirer.prompt([
         {
             type: 'list',
-            name: 'roles',
+            name: 'role',
             message: "Please add your team member's role.",
-            choices: ['Engineer', 'Intern', 'Finish building team']
+            choices: ['Engineer', 'Intern', 'Exit']
         },
         {
             type: 'input',
-            name: 'name',
+            name: 'nameTeaM',
             message: "Enter team member's name.",
             validate: nameInput => {
                 if (nameInput) {
@@ -167,5 +167,55 @@ const promptTeam = () => {
                 }
             }
         }
-    ]);
+    ])
+    .then(teamInput => {
+        let {nameTeaM, employeeId, emailAddress, github, school} = teamInput;
+        let teamMember;
+
+        if (role === "Engineer") {
+            teamMember = new Engineer (nameTeaM, employeeId, emailAddress, github);
+        }
+        else if (role === "Intern") {
+            teamMember = new Intern (nameTeaM, employeeId, emailAddress, school);
+        }
+        engineeringTeamArray.push(teamMember);
+        promptTeam();
+    });
 };
+
+
+// Function to write html file
+function writeToFile(fileName, data) {
+    fs.writeFile(fileName, data, err => {
+        if (err) {
+            throw err;
+        }
+        console.log('Team profile was created successfully.')
+    });
+};
+
+// Function to generate HTML file
+const writeFile = data => {
+    fs.writeFile('./dist/index.html', data, err => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        else {
+            console.log("The engineering team profiles was generated successfully!")
+        }
+    })
+};
+
+// Function call to initialize app
+promptManager()
+    // .then(promptTeam())
+    // .then(engineeringTeamArray => {
+    //     return generateHTML(engineeringTeamArray);
+    // })
+    // .then(pageHTML => {
+    //     return writeFile(pageHTML);
+    // })
+    // .catch(err => {
+    //     console.log(err);
+    // });
