@@ -161,7 +161,6 @@ const promptTeam = () => {
                     console.log('Must enter the GitHub username!');
                 }
             },
-            when: (input) => input.role !== 'Exit'
         },
         {
             type: 'input',
@@ -176,7 +175,6 @@ const promptTeam = () => {
                     console.log('Must enter the School name!');
                 }
             },
-            when: (input) => input.role !== 'Exit'
         }
     ])
     .then(teamInput => {
