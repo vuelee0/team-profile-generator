@@ -114,7 +114,8 @@ const promptTeam = () => {
                 else {
                     console.log('Must enter a name!');
                 }
-            }
+            },
+            when: (input) => input.role !== 'Exit'
         },
         {
             type: 'input',
@@ -127,7 +128,8 @@ const promptTeam = () => {
                 else {
                     console.log('Must Employee ID!');
                 }
-            }
+            },
+            when: (input) => input.role !== 'Exit'
         },
         {
             type: 'input',
@@ -143,8 +145,8 @@ const promptTeam = () => {
                         console.log('Must enter an email address!')
                         return false;
                     }
-            }
-            
+            },
+            when: (input) => input.role !== 'Exit'
         },
         {
             type: 'input',
@@ -158,7 +160,8 @@ const promptTeam = () => {
                 else {
                     console.log('Must enter the GitHub username!');
                 }
-            }
+            },
+            when: (input) => input.role !== 'Exit'
         },
         {
             type: 'input',
@@ -172,7 +175,8 @@ const promptTeam = () => {
                 else {
                     console.log('Must enter the School name!');
                 }
-            }
+            },
+            when: (input) => input.role !== 'Exit'
         }
     ])
     .then(teamInput => {
@@ -183,6 +187,9 @@ const promptTeam = () => {
             }
             else if (role === 'Intern') {
                 teamMember = new Intern (teamInput.nameTeaM, teamInput.employeeId, teamInput.emailAddress, teamInput.school);
+            }
+            else if (role === 'Exit') {
+                process.exit(0);
             }
 
         engineeringTeamArray.push(teamMember);
