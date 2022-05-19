@@ -1,0 +1,23 @@
+header {
+    background-color: darkcyan;
+    padding: 30px;
+    text-align: center;
+    color: white;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    margin: 25px;
+    padding: 5px;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
+    width: 250px;
+}
+
+.card-header {
+    background-color: lightcyan;
+    padding: 1px 10px 1px 10px;
+}

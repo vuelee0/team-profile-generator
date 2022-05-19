@@ -2,7 +2,7 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 
 // link to the HTML that is generated
-const generateHTML = require('./src/generatedHTML.js');
+const generateHTML = require('./src/generateHTML.js');
 
 // link to team member's object
 const Manager = require('./lib/Manager.js');
@@ -25,6 +25,7 @@ const promptManager = () => {
                 }
                 else {
                     console.log('Please enter your name!');
+                    return false;
                 }
             }
         },
@@ -38,6 +39,7 @@ const promptManager = () => {
                 }
                 else {
                     console.log('Please enter your Employee ID!');
+                    return false;
                 }
             }
         },
@@ -67,6 +69,7 @@ const promptManager = () => {
                 }
                 else {
                     console.log('Please enter your office number!');
+                    return false;
                 }
             }
         }
@@ -76,7 +79,6 @@ const promptManager = () => {
 
         engineeringTeamArray.push(manager);
         console.log(managerAnswer);
-        promptTeam();
     })
 };
 
@@ -88,6 +90,7 @@ const promptTeam = () => {
     Add Team Members
     ****************
     `);
+
 
     return inquirer.prompt([
         {
@@ -181,10 +184,10 @@ const promptTeam = () => {
       let {role, nameTeaM, employeeId, emailAddress, github, school} = teamInput;
         let teamMember;
             if (role === 'Engineer') {
-                teamMember = new Engineer (teamInput.nameTeaM, teamInput.employeeId, teamInput.emailAddress, teamInput.github);
+                teamMember = new Engineer (nameTeaM, employeeId, emailAddress, github);
             }
             else if (role === 'Intern') {
-                teamMember = new Intern (teamInput.nameTeaM, teamInput.employeeId, teamInput.emailAddress, teamInput.school);
+                teamMember = new Intern (nameTeaM, employeeId, emailAddress, school);
             }
             else if (role === 'Exit') {
                 process.exit(0);
@@ -196,16 +199,6 @@ const promptTeam = () => {
     });
 };
 
-
-// Function to write html file
-function writeToFile(fileName, data) {
-    fs.writeFile(fileName, data, err => {
-        if (err) {
-            throw err;
-        }
-        console.log('Team profile was created successfully.')
-    });
-};
 
 // Function to generate HTML file
 const writeFile = data => {
@@ -220,15 +213,16 @@ const writeFile = data => {
     })
 };
 
+
 // Function call to initialize app
 promptManager()
-    // .then(promptTeam())
-    // .then(engineeringTeamArray => {
-    //     return generateHTML(engineeringTeamArray);
-    // })
-    // .then(pageHTML => {
-    //     return writeFile(pageHTML);
-    // })
-    // .catch(err => {
-    //     console.log(err);
-    // });
+    .then(promptTeam)
+    .then(engineeringTeamArray => {
+        return generateHTML(engineeringTeamArray);
+    })
+    .then(pageHTML => {
+        return writeFile(pageHTML);
+    })
+    .catch(err => {
+        console.log(err);
+    });
