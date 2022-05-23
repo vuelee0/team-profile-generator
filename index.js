@@ -103,7 +103,7 @@ const promptTeam = () => {
             type: 'confirm',
             name: 'exit',
             message: "Would you like to exit?",
-            default: true,
+            default: false,
             when: (input) => input.role === 'Exit'
         },
         {
@@ -181,7 +181,7 @@ const promptTeam = () => {
         }
     ])
     .then(teamInput => {
-      let {role, nameTeaM, employeeId, emailAddress, github, school} = teamInput;
+        let {role, nameTeaM, employeeId, emailAddress, github, school, exit} = teamInput;
         let teamMember;
             if (role === 'Engineer') {
                 teamMember = new Engineer (nameTeaM, employeeId, emailAddress, github);
@@ -189,13 +189,20 @@ const promptTeam = () => {
             else if (role === 'Intern') {
                 teamMember = new Intern (nameTeaM, employeeId, emailAddress, school);
             }
-            else if (role === 'Exit') {
-                process.exit(0);
+            // else if (role === 'Exit') {
+            //     process.exit(0);
+            // }
+
+            engineeringTeamArray.push(teamMember);
+        
+            if (exit) {
+                return promptTeam(engineeringTeamArray);
+            }
+            else {
+                return engineeringTeamArray;
             }
 
-        engineeringTeamArray.push(teamMember);
-        console.log(teamInput);
-        promptTeam();
+        // promptTeam();
     });
 };
 
@@ -217,7 +224,7 @@ const writeFile = data => {
 // Function call to initialize app
 promptManager()
     .then(promptTeam)
-    .then(engineeringTeamArray => {
+    .then(data => {
         return generateHTML(engineeringTeamArray);
     })
     .then(pageHTML => {

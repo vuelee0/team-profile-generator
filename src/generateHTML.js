@@ -7,13 +7,13 @@ const generateTeam = (team) => {
         let managerHTML = `
         <div class="card">
             <div class="card-header">
-                <h3>${manager.name}</h3>
+                <h3>${manager.getName()}</h3>
                 <h4>Manager</h4>
             </div>
             <div class="card-body">
-                <p id="id">ID: ${manager.id}</p>
-                <p id="email">Email: <a href="mailto:${manager.email}">${manager.email}</a></p>
-                <p id="office">Office Number: ${manager.officeNumber}</p>
+                <p id="id">ID: ${manager.getId()}</p>
+                <p id="email">Email: <a href="mailto:${manager.getEmail()}">${manager.getEmail()}</a></p>
+                <p id="office">Office Number: ${manager.getOfficeNumber()}</p>
             </div>
         </div>
         `;
@@ -24,13 +24,13 @@ const generateTeam = (team) => {
         let engineerHTML = `
         <div class="card">
             <div class="card-header">
-                <h3>${engineer.name}</h3>
+                <h3>${engineer.getName()}</h3>
                 <h4>Engineer</h4>
             </div>
             <div class="card-body">
-                <p id="id">ID: ${engineer.id}</p>
-                <p id="email">Email: <a href="mailto:${engineer.email}">${engineer.email}</a></p>
-                <p id="github">Github: <a href="https://github.com/${engineer.github}">${engineer.github}</a></p>
+                <p id="id">ID: ${engineer.getId()}</p>
+                <p id="email">Email: <a href="mailto:${engineer.getEmail()}">${engineer.getEmail()}</a></p>
+                <p id="github">Github: <a href="https://github.com/${engineer.getGithub()}">${engineer.getGithub()}</a></p>
             </div>
         </div>
         `;
@@ -41,18 +41,19 @@ const generateTeam = (team) => {
         let internHTML = `
         <div class="card">
             <div class="card-header">
-                <h3>${intern.name}</h3>
+                <h3>${intern.getName()}</h3>
                 <h4>Intern</h4>
             </div>
             <div class="card-body">
-                <p id="id">ID: ${intern.id}</p>
-                <p id="email">Email: <a href="mailto:${intern.email}">${intern.email}</a></p>
-                <p id="school">School: ${intern.school}</p>
+                <p id="id">ID: ${intern.getId()}</p>
+                <p id="email">Email: <a href="mailto:${intern.getEmail()}">${intern.getEmail()}</a></p>
+                <p id="school">School: ${intern.getSchool()}</p>
             </div>
         </div>
         `;
         html.push(internHTML);
     }
+    
     // create a loop for all of the employees
     for (let i = 0; i < team.length; i++) {
         if (team[i].getRole() === "Manager") {
@@ -79,9 +80,9 @@ module.exports = team => {
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Template</title>
+            <title>Team Profile Generator</title>
 
-            <link rel="stylesheet" href=".dist/style.css">
+            <link rel="stylesheet" href="style.css">
         </head>
         <body>
             <header>
